@@ -1,0 +1,52 @@
+@Library('lazarus-shared-libs@develop') _
+//def pipelineConfig = [
+//        "Liquibase_Image": "revenue-management-db-migration",
+//        "dockerRegistry" : "10.240.36.105:30035",
+//        "sonar_url"      : "http://10.240.36.105:30037/",
+//]
+def pipelineConfig = [
+        "myTestVar"     : "testVar",
+        "defectDojo"    : [
+                "foo" : "loud",
+                "foo1": "",
+                "test": "test"
+        ],
+        "dockerRegistry": [
+                "foo"     : "bar",
+                "dReg_Url": "https://intrasoft-intl.com"
+        ],
+        "sonarQube"     : [
+                "foo": "bar"
+        ],
+        "debugMode"     : "false"
+]
+pipeline {
+    options {
+        ansiColor('xterm')
+    }
+    parameters {
+//        choice(name: 'RELEASE_SETTINGS', choices: ['Standard', 'Release'], description: 'environment properties')
+        booleanParam(name: 'DEBUG', defaultValue: "false", description: 'DebugMode: Enabling reveals extra sanity check messages?')
+    }
+    agent {
+        kubernetes { yaml getAgent.getWithContainers(['maven']) }
+    }//defaultContainer 'jnlp'
+    stages {
+        stage("MyStage") {
+            steps {
+                script {
+                    log.stageBanner "${STAGE_NAME}"
+                    log.info "This is an info message."
+                    log.debug "This is a debug message."
+                    log.warn "This is a warning message."
+                    log.error "This is an error message."
+                    config = getConfig(pipelineConfig)
+                    println config
+//                    println config.myTestVar //echo a non-nested variable as sanity check
+//                    println config.dockerRegistry.foo //echo a nested variable as sanity check
+//                    println config.maven.localRepo //echo a nested defaultConfig variable as sanity check
+                }
+            }
+        }
+    }
+}

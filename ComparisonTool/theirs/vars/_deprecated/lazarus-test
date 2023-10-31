@@ -1,0 +1,23 @@
+@Library('lazarus-shared-libs@1.0.0') _
+//DefectDojoURL = 'https://in.gr'
+//podYaml = 'test'
+pipeline {
+    options {
+        ansiColor('xterm')
+    }
+    agent { kubernetes { yaml getAgent.getWithContainers(['java', 'helm']) }//defaultContainer 'jnlp'
+
+    }
+    stages {
+        stage("MyStage") {
+            steps {
+                script {
+                    echo "---------------"
+                    // def yaml = getAgent.getWithContainers(['java', 'helm'])
+                    // log.stageBanner "${STAGE_NAME}"
+                    // print(yaml)
+                }
+            }
+        }
+    }
+}

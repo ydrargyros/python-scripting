@@ -1,0 +1,61 @@
+//@Library('lazarus-shared-libs@1.0.0') _
+/*
+Pipeline Boilerplate
+Stages included:
+Init -> Build:(CodeBuild -> dockerize -> Helmify) -> Test - Deploy
+Across these stages the following Security and Testing stages also exist
+GitLeaks Secret Scanning / Dependency Track Scanning / Anchore Image Scanning / Sonarqube Analysis /
+ */
+@Library('lazarus-shared-libs@develop') _
+def pipelineConfig = [
+        "myTestVar"     : "testVar",
+        "defectDojo"    : [
+                "foo" : "loud",
+                "foo1": "",
+                "test": "test"
+        ],
+        "dockerRegistry": [
+                "foo"     : "bar",
+                "dReg_Url": "https://intrasoft-intl.com"
+        ],
+        "sonarQube"     : [
+                "foo": "bar"
+        ],
+        "debugMode"     : "false"
+]
+pipeline {
+    options {
+        ansiColor('xterm')
+    }
+    parameters {
+        booleanParam(name: 'DEBUG', defaultValue: "false", description: 'DebugMode: Enabling reveals extra sanity check messages?')
+    }
+    agent {
+        kubernetes { yaml getAgent.getWithContainers(['maven']) }
+    }//defaultContainer 'jnlp'
+    stages {
+        stage("Init Pipeline") {
+            steps {
+                script {
+                    //Pipeline Configuration initialization
+                    config = getConfig(pipelineConfig)
+                    println config
+                    //Get Git Details
+                    getGitDetails()
+                    /* Checkout configuration */
+                }
+            }
+        }
+        stage("Showcase") {
+            steps {
+                script {
+                    log.stageBanner "${STAGE_NAME}"
+                    log.info "This is an info message."
+                    log.debug "This is a debug message."
+                    log.warn "This is a warning message."
+                    log.error "This is an error message."
+                }
+            }
+        }
+    }
+}
