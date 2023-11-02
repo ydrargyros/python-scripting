@@ -1,5 +1,6 @@
 import yaml
 
+
 def compare_files(file1, file2):
     print_header()
     with open(file1) as f1, open(file2) as f2:
@@ -30,16 +31,17 @@ def compare_subkeys(data1, data2):
             subsuboverrides = compare_subkeys(data1[key], value)
             if subsuboverrides:
                 suboverrides[key] = subsuboverrides
+        elif isinstance(value, list) and isinstance(data1[key], list):
+            if len(value) != len(data1[key]):
+                suboverrides[key] = value
+            else:
+                for i, item in enumerate(value):
+                    if item != data1[key][i]:
+                        suboverrides[key] = value
+                        break
         elif data1[key] != value:
             suboverrides[key] = value
-    if isinstance(data2, dict):
-        # Use block style for dictionaries
-        return yaml.dump(suboverrides, default_flow_style=False)
-    elif isinstance(data2, list):
-        # Use block style for lists/sequences
-        return yaml.dump(suboverrides, default_flow_style=True)
-    else:
-        return suboverrides
+    return suboverrides
 
 
 # Header
@@ -58,4 +60,4 @@ def print_header():
 
 
 if __name__ == '__main__':
-    compare_files('values.yaml', 'values-prod.yaml')
+    compare_files('values-original.yaml', 'values-dev-overrides.yaml')
