@@ -1,0 +1,512 @@
+deployments:
+  taxpayer-accounting-custom-app:
+    trust:
+      enabled: false
+    enabled: true
+    imageRepository: taxpayer-accounting-custom-app
+    configmaps:
+      taxpayer-accounting-custom-app:
+        properties:
+          server.port: 8080
+          spring.datasource.url: "{{ .Values.environment.db.jdbcUrl}}?currentSchema=irm_taxpayeraccounting_db"
+          spring.datasource.username: irm_taxpayeraccounting_db
+          spring.datasource.password: irm_taxpayeraccounting_db#$%1
+          spring.kafka.bootstrap-servers: "{{ .Values.environment.kafka.bootstrapServers }}"
+          spring.security.oauth2.client.registration.irm-be.client-secret: "{{ .Values.environment.auth.clientSecret }}"
+          spring.security.oauth2.client.registration.irm-be.client-id: "{{ .Values.environment.auth.clientId }}"
+          error-handling.rest.reference-data-app-url: "{{ .Values.environment.serviceUrl.referenceDataAppUrl }}"
+          error-handling.rest.translation-management-app-url: "{{ .Values.environment.serviceUrl.translationManagementAppUrl }}"
+          taxpayer-accounting.auth.auth-server-uri: "{{ .Values.environment.auth.authServerUrl }}"
+          taxpayer-accounting.auth.realm: "{{ .Values.environment.auth.realm }}"
+          taxpayer-accounting.rest.currency-exchange-app-url: "{{ .Values.environment.serviceUrl.currencyExchangeAppUrl }}"
+          taxpayer-accounting.rest.registration-app-url: "{{ .Values.environment.serviceUrl.registrationAppUrl }}"
+          taxpayer-accounting.rest.ui-configuration-app-url: "{{ .Values.environment.serviceUrl.uiConfigurationAppUrl }}"
+          taxpayer-accounting.rest.case-management-app-url: "{{ .Values.environment.serviceUrl.caseManagementAppUrl }}"
+          taxpayer-accounting.rest.contact-management-app-url: "{{ .Values.environment.serviceUrl.contactManagementAppUrl }}"
+          taxpayer-accounting.rest.external-adapter.distribution-app-url: "{{ .Values.environment.serviceUrl.distributionAppUrl }}"
+          taxpayer-accounting.rest.external-adapter.penalty-interest-app-url: "{{ .Values.environment.serviceUrl.penaltyInterestAppUrl }}"
+          taxpayer-accounting.rest.process-management-app-url: "{{ .Values.environment.serviceUrl.processManagementAppUrl }}"
+          taxpayer-accounting.rest.query-management-app-url: "{{ .Values.environment.serviceUrl.queryManagementAppUrl }}"
+          taxpayer-accounting.rest.exception-management-app-url: "{{ .Values.environment.serviceUrl.exceptionManagementAppUrl }}"
+          taxpayer-accounting.rest.entity-version-app-url: "{{ .Values.environment.serviceUrl.entityVersionAppUrl }}"
+          taxpayer-accounting.rest.outbound.registration: "{{ .Values.environment.serviceUri.registration }}"
+          taxpayer-accounting.rest.outbound.taxpayer-accounting: "{{ .Values.environment.serviceUri.taxpayerAccounting }}"
+          taxpayer-accounting.rest.outbound.currency-exchange: "{{ .Values.environment.serviceUri.currencyExchange }}"
+          taxpayer-accounting.rest.outbound.ui-configuration: "{{ .Values.environment.serviceUri.uiConfiguration }}"
+          taxpayer-accounting.rest.outbound.process-management: "{{ .Values.environment.serviceUri.processManagement }}"
+          taxpayer-accounting.rest.outbound.authorization-management: "{{ .Values.environment.serviceUri.authorizationManagement }}"
+          taxpayer-accounting.rest.outbound.contact-management: "{{ .Values.environment.serviceUri.contactManagement }}"
+          taxpayer-accounting.rest.outbound.case-management: "{{ .Values.environment.serviceUri.caseManagement }}"
+          taxpayer-accounting.rest.outbound.human-task-management: "{{ .Values.environment.serviceUri.humanTaskManagement }}"
+          taxpayer-accounting.rest.outbound.exception-management: "{{ .Values.environment.serviceUri.exceptionManagement }}"
+          kie-client.kie-server-url: "{{ .Values.environment.kie.serverUrl }}"
+          kie-client.api-gateway-url: "{{ .Values.environment.kie.apiGatewayUrl }}"
+          elastic.apm.enabled: "{{ .Values.environment.apm.enabled }}"
+          elastic.apm.configuration.server_urls: "{{ .Values.environment.apm.serverUrls }}"
+          elastic.apm.configuration.environment: "{{ .Values.environment.apm.environment }}"
+          spring.jpa.show-sql: "{{ .Values.environment.spring.showSql }}"
+          logging.level.root: "{{ .Values.environment.loggingLevel.root }}"
+          taxpayer-accounting.pi.include-all-segments: true
+          taxpayer-accounting.pi.validate-segments: false
+      taxpayer-accounting-custom-app-dbmig:
+        properties:
+          LIQUIBASE_CHANGELOG_FILE: migrations/taxpayer-accounting/master.xml
+          LIQUIBASE_DB_URL: "{{ .Values.environment.db.jdbcUrl }}"
+          LIQUIBASE_COMMANDS: update
+          LIQUIBASE_DB_DRIVER: "{{ .Values.environment.db.driver }}"
+          LIQUIBASE_DB_SCHEMA_NAME: irm_taxpayeraccounting_db
+          LIQUIBASE_LOG_LEVEL: info
+          LIQUIBASE_DB_USER: irm_taxpayeraccounting_db
+          LIQUIBASE_DB_PASSWD: irm_taxpayeraccounting_db#$%1
+    envFrom:
+      configMapRefs:
+        - taxpayer-accounting-custom-app
+        - taxpayer-accounting-custom-app-dbmig
+      secretRefs: {}
+    ports:
+      - 8080
+    service:
+      type: ClusterIP
+      port: 8080
+      targetPort: 8080
+      nodePort: {}
+    dbmigration: true
+    brms: false
+    ingress:
+      enabled: false
+  registration-custom-app:
+    trust:
+      enabled: false
+    enabled: true
+    imageRepository: registration-custom-app
+    configmaps:
+      registration-custom-app:
+        properties:
+          server.port: 8080
+          spring.datasource.url: "{{ .Values.environment.db.jdbcUrl}}?currentSchema=irm_registration_db"
+          spring.datasource.username: irm_registration_db
+          spring.datasource.password: irm_registration_db#$%1
+          spring.kafka.bootstrap-servers: "{{ .Values.environment.kafka.bootstrapServers }}"
+          error-handling.rest.reference-data-app-url: "{{ .Values.environment.serviceUrl.referenceDataAppUrl }}"
+          error-handling.rest.translation-management-app-url: "{{ .Values.environment.serviceUrl.translationManagementAppUrl }}"
+          gateway.auth.auth-server-uri: "{{ .Values.environment.auth.authServerUrl }}"
+          gateway.auth.realm: "{{ .Values.environment.auth.realm }}"
+          kie-client.kie-server-url: "{{ .Values.environment.kie.serverUrl }}"
+          kie-client.api-gateway-url: "{{ .Values.environment.kie.apiGatewayUrl }}"
+          elastic.apm.enabled: "{{ .Values.environment.apm.enabled }}"
+          elastic.apm.configuration.server_urls: "{{ .Values.environment.apm.serverUrls }}"
+          elastic.apm.configuration.environment: "{{ .Values.environment.apm.environment }}"
+          registration.rest.taxpayer-accounting-app-url: "{{ .Values.environment.serviceUrl.taxpayerAccountingAppUrl }}"
+          registration.rest.ui-configuration-app-url: "{{ .Values.environment.serviceUrl.uiConfigurationAppUrl }}"
+          registration.rest.contact-management-app-url: "{{ .Values.environment.serviceUrl.contactManagementAppUrl }}"
+          registration.rest.authorization-management-app-url: "{{ .Values.environment.serviceUrl.authorizationManagementAppUrl }}"
+          spring.jpa.show-sql: "{{ .Values.environment.spring.showSql }}"
+          logging.level.root: "{{ .Values.environment.loggingLevel.root }}"
+          query-management-app-url: "{{ .Values.environment.serviceUrl.queryManagementAppUrl }}"
+      registration-custom-app-dbmig:
+        properties:
+          LIQUIBASE_CHANGELOG_FILE: migrations/registration/master.xml
+          LIQUIBASE_DB_URL: "{{ .Values.environment.db.jdbcUrl }}"
+          LIQUIBASE_COMMANDS: update
+          LIQUIBASE_DB_DRIVER: "{{ .Values.environment.db.driver }}"
+          LIQUIBASE_DB_SCHEMA_NAME: irm_registration_db
+          LIQUIBASE_LOG_LEVEL: info
+          LIQUIBASE_DB_USER: irm_registration_db
+          LIQUIBASE_DB_PASSWD: irm_registration_db#$%1
+    envFrom:
+      configMapRefs:
+        - registration-custom-app
+        - registration-custom-app-dbmig
+      secretRefs: {}
+    ports:
+      - 8080
+    service:
+      type: ClusterIP
+      port: 8080
+      targetPort: 8080
+      nodePort: {}
+    dbmigration: true
+    brms: false
+    ingress:
+      enabled: false
+  human-task-management-custom-app:
+    trust:
+      enabled: false
+    enabled: true
+    imageRepository: human-task-management-custom-app
+    configmaps:
+      human-task-management-custom-app:
+        properties:
+          server.port: 8080
+          spring.datasource.url: "{{ .Values.environment.db.jdbcUrl}}?currentSchema=irm_humantaskmanagement_db"
+          spring.datasource.username: irm_humantaskmanagement_db
+          spring.datasource.password: irm_humantaskmanagement_db#$%1
+          spring.security.oauth2.client.registration.irm-be.client-secret: "{{ .Values.environment.auth.clientSecret }}"
+          spring.security.oauth2.client.registration.irm-be.client-id: "{{ .Values.environment.auth.clientId }}"
+          error-handling.rest.reference-data-app-url: "{{ .Values.environment.serviceUrl.referenceDataAppUrl }}"
+          error-handling.rest.translation-management-app-url: "{{ .Values.environment.serviceUrl.translationManagementAppUrl }}"
+          human-task-management.auth.auth-server-uri: "{{ .Values.environment.auth.authServerUrl }}"
+          human-task-management.auth.realm: "{{ .Values.environment.auth.realm }}"
+          spring.kafka.bootstrap-servers: "{{ .Values.environment.kafka.bootstrapServers }}"
+          human-task-management.rest.case-management-app-url: "{{ .Values.environment.serviceUrl.caseManagementAppUrl }}"
+          human-task-management.rest.outbound.registration: "{{ .Values.environment.serviceUri.registration }}"
+          human-task-management.rest.outbound.taxpayer-accounting: "{{ .Values.environment.serviceUri.taxpayerAccounting }}"
+          human-task-management.rest.outbound.currency-exchange: "{{ .Values.environment.serviceUri.currencyExchange }}"
+          human-task-management.rest.outbound.ui-configuration: "{{ .Values.environment.serviceUri.uiConfiguration }}"
+          human-task-management.rest.outbound.process-management: "{{ .Values.environment.serviceUri.processManagement }}"
+          human-task-management.rest.outbound.authorization-management: "{{ .Values.environment.serviceUri.authorizationManagement }}"
+          human-task-management.rest.outbound.contact-management: "{{ .Values.environment.serviceUri.contactManagement }}"
+          human-task-management.rest.outbound.entity-version-app-url: "{{ .Values.environment.serviceUrl.entityVersionAppUrl }}"
+          human-task-management.rest.outbound.authorization-management-app-url: "{{ .Values.environment.serviceUrl.authorizationManagementAppUrl }}"
+          human-task-management.rest.outbound.case-management: "{{ .Values.environment.serviceUri.caseManagement }}"
+          human-task-management.rest.outbound.human-task-management: "{{ .Values.environment.serviceUri.humanTaskManagement }}"
+          human-task-management.rest.outbound.exception-management-app-url: "{{ .Values.environment.serviceUrl.exceptionManagementAppUrl }}"
+          human-task-management.rest.outbound.process-management-app-url: "{{ .Values.environment.serviceUrl.processManagementAppUrl }}"
+          human-management.rest.outbound.exception-management: "{{ .Values.environment.serviceUri.exceptionManagement }}"
+          human-task-management.rest.outbound.ui-configuration-app-url: "{{ .Values.environment.serviceUrl.uiConfigurationAppUrl }}"
+          human-task-management.rest.outbound.query-management-app-url: "{{ .Values.environment.serviceUrl.queryManagementAppUrl }}"
+          kie-client.kie-server-url: "{{ .Values.environment.kie.serverUrl }}"
+          kie-client.api-gateway-url: "{{ .Values.environment.kie.apiGatewayUrl }}"
+          spring.jpa.show-sql: "{{ .Values.environment.spring.showSql }}"
+          logging.level.root: "{{ .Values.environment.loggingLevel.root }}"
+      human-task-management-custom-app-dbmig:
+        properties:
+          LIQUIBASE_CHANGELOG_FILE: migrations/human-task-management/master.xml
+          LIQUIBASE_DB_URL: "{{ .Values.environment.db.jdbcUrl }}"
+          LIQUIBASE_COMMANDS: update
+          LIQUIBASE_DB_DRIVER: "{{ .Values.environment.db.driver }}"
+          LIQUIBASE_DB_SCHEMA_NAME: irm_humantaskmanagement_db
+          LIQUIBASE_LOG_LEVEL: info
+          LIQUIBASE_DB_USER: irm_humantaskmanagement_db
+          LIQUIBASE_DB_PASSWD: irm_humantaskmanagement_db#$%1
+    envFrom:
+      configMapRefs:
+        - human-task-management-custom-app
+        - human-task-management-custom-app-dbmig
+      secretRefs: {}
+    ports:
+      - 8080
+    service:
+      type: ClusterIP
+      port: 8080
+      targetPort: 8080
+      nodePort: {}
+    dbmigration: true
+    brms: false
+    ingress:
+      enabled: false
+  case-management-custom-app:
+    trust:
+      enabled: false
+    enabled: true
+    imageRepository: case-management-custom-app
+    configmaps:
+      case-management-custom-app:
+        properties:
+          server.port: 8080
+          spring.datasource.url: "{{ .Values.environment.db.jdbcUrl}}?currentSchema=irm_casemanagement_db"
+          spring.datasource.username: irm_casemanagement_db
+          spring.datasource.password: irm_casemanagement_db#$%1
+          spring.kafka.bootstrap-servers: "{{ .Values.environment.kafka.bootstrapServers }}"
+          error-handling.rest.reference-data-app-url: "{{ .Values.environment.serviceUrl.referenceDataAppUrl }}"
+          error-handling.rest.translation-management-app-url: "{{ .Values.environment.serviceUrl.translationManagementAppUrl }}"
+          case-management.auth.auth-server-uri: "{{ .Values.environment.auth.authServerUrl }}"
+          case-management.auth.realm: "{{ .Values.environment.auth.realm }}"
+          elastic.apm.enabled: "{{ .Values.environment.apm.enabled }}"
+          elastic.apm.configuration.server_urls: "{{ .Values.environment.apm.serverUrls }}"
+          elastic.apm.configuration.environment: "{{ .Values.environment.apm.environment }}"
+          case-management.rest.registration-app-url: "{{ .Values.environment.serviceUrl.registrationAppUrl }}"
+          case-management.rest.authorization-app-url: "{{ .Values.environment.serviceUrl.authorizationManagementAppUrl }}"
+          case-management.rest.ui-configuration-app-url: "{{ .Values.environment.serviceUrl.uiConfigurationAppUrl }}"
+          case-management.rest.taxpayer-accounting-app-url: "{{ .Values.environment.serviceUrl.taxpayerAccountingAppUrl }}"
+          case-management.rest.query-management-app-url: "{{ .Values.environment.serviceUrl.queryManagementAppUrl }}"
+          case-management.rest.entity-version-app-url: "{{ .Values.environment.serviceUrl.entityVersionAppUrl }}"
+          case-management.rest.outbound.taxpayer-accounting: "{{ .Values.environment.serviceUri.taxpayerAccounting }}"
+          case-management.rest.outbound.ui-configuration: "{{ .Values.environment.serviceUri.uiConfiguration }}"
+          case-management.rest.outbound.authorization-management-app-url: "{{ .Values.environment.serviceUri.authorizationManagement }}"
+          case-management.rest.human-task-management-app-url: "{{ .Values.environment.serviceUrl.humanTaskManagementAppUrl }}"
+          case-management.rest.outbound.human-task-management: "{{ .Values.environment.serviceUri.humanTaskManagement }}"
+          case-management.rest.process-management-app-url: "{{ .Values.environment.serviceUrl.processManagementAppUrl }}"
+          case-management.rest.document-management-app-url: "{{ .Values.environment.serviceUrl.documentManagementAppUrl }}"
+          case-management.rest.outbound.contact-management: "{{ .Values.environment.serviceUri.contactManagement }}"
+          case-management.rest.outbound.case-management: "{{ .Values.environment.serviceUri.caseManagement }}"
+          case-management.rest.outbound.exception-management-app-url: "{{ .Values.environment.serviceUrl.exceptionManagementAppUrl }}"
+          case-management.rest.outbound.exception-management: "{{ .Values.environment.serviceUri.exceptionManagement }}"
+          case-management.rest.outbound.currency-exchange: "{{ .Values.environment.serviceUri.currencyExchange }}"
+          case-management.rest.outbound.registration: "{{ .Values.environment.serviceUri.registration }}"
+          case-management.rest.outbound.process-management: "{{ .Values.environment.serviceUri.processManagement }}"
+          case-management.rest.outbound.query-management-app-url: "{{ .Values.environment.serviceUrl.queryManagementAppUrl }}"
+          case-management.rest.outbound.operational-plan: "{{ .Values.environment.serviceUri.operationalPlan }}"
+          spring.security.oauth2.client.registration.irm-be.client-secret: "{{ .Values.environment.auth.clientSecret }}"
+          spring.security.oauth2.client.registration.irm-be.client-id: "{{ .Values.environment.auth.clientId }}"
+          kie-client.kie-server-url: "{{ .Values.environment.kie.serverUrl }}"
+          kie-client.api-gateway-url: "{{ .Values.environment.kie.apiGatewayUrl }}"
+          spring.jpa.show-sql: "{{ .Values.environment.spring.showSql }}"
+          logging.level.root: "{{ .Values.environment.loggingLevel.root }}"
+      case-management-custom-app-dbmig:
+        properties:
+          LIQUIBASE_CHANGELOG_FILE: migrations/case-management/master.xml
+          LIQUIBASE_DB_URL: "{{ .Values.environment.db.jdbcUrl }}"
+          LIQUIBASE_COMMANDS: update
+          LIQUIBASE_DB_DRIVER: "{{ .Values.environment.db.driver }}"
+          LIQUIBASE_DB_SCHEMA_NAME: irm_casemanagement_db
+          LIQUIBASE_LOG_LEVEL: info
+          LIQUIBASE_DB_USER: irm_casemanagement_db
+          LIQUIBASE_DB_PASSWD: irm_casemanagement_db#$%1
+    envFrom:
+      configMapRefs:
+        - case-management-custom-app
+        - case-management-custom-app-dbmig
+      secretRefs: {}
+    ports:
+      - 8080
+    service:
+      type: ClusterIP
+      port: 8080
+      targetPort: 8080
+      nodePort: {}
+    dbmigration: true
+    brms: false
+    ingress:
+      enabled: false
+  contact-management-custom-app:
+    trust:
+      enabled: false
+    enabled: true
+    imageRepository: contact-management-custom-app
+    configmaps:
+      contact-management-custom-app:
+        properties:
+          server.port: 8080
+          spring.datasource.url: "{{ .Values.environment.db.jdbcUrl}}?currentSchema=irm_contactmanagement_db"
+          spring.datasource.username: irm_contactmanagement_db
+          spring.datasource.password: irm_contactmanagement_db#$%1
+          spring.security.oauth2.client.registration.irm-be.client-secret: "{{ .Values.environment.auth.clientSecret }}"
+          spring.security.oauth2.client.registration.irm-be.client-id: "{{ .Values.environment.auth.clientId }}"
+          error-handling.rest.reference-data-app-url: "{{ .Values.environment.serviceUrl.referenceDataAppUrl }}"
+          error-handling.rest.translation-management-app-url: "{{ .Values.environment.serviceUrl.translationManagementAppUrl }}"
+          contact-management.rest.taxpayer-accounting-app-url: "{{ .Values.environment.serviceUrl.taxpayerAccountingAppUrl }}"
+          contact-management.rest.registration-app-url: "{{ .Values.environment.serviceUrl.registrationAppUrl }}"
+          contact-management.rest.document-management-app-url: "{{ .Values.environment.serviceUrl.documentManagementAppUrl }}"
+          contact-management.rest.ui-configuration-app-url: "{{ .Values.environment.serviceUrl.uiConfigurationAppUrl }}"
+          contact-management.rest.outbound.registration: "{{ .Values.environment.serviceUri.registration }}"
+          contact-management.rest.outbound.taxpayer-accounting: "{{ .Values.environment.serviceUri.taxpayerAccounting }}"
+          contact-management.rest.outbound.currency-exchange: "{{ .Values.environment.serviceUri.currencyExchange }}"
+          contact-management.rest.outbound.ui-configuration: "{{ .Values.environment.serviceUri.uiConfiguration }}"
+          contact-management.rest.outbound.process-management: "{{ .Values.environment.serviceUri.processManagement }}"
+          contact-management.rest.outbound.authorization-management: "{{ .Values.environment.serviceUri.authorizationManagement }}"
+          contact-management.rest.outbound.contact-management: "{{ .Values.environment.serviceUri.contactManagement }}"
+          contact-management.rest.outbound.direct-debit: "{{ .Values.environment.serviceUri.directDebit }}"
+          contact-management.rest.outbound.case-management: "{{ .Values.environment.serviceUri.caseManagement }}"
+          contact-management.rest.outbound.human-task-management: "{{ .Values.environment.serviceUri.humanTaskManagement }}"
+          contact-management.reporting.datasource.url: "{{ .Values.environment.db.jdbcUrl}}?currentSchema=irm_reporting_db"
+          contact-management.reporting.datasource.username: irm_reporting_db
+          contact-management.reporting.datasource.password: irm_reporting_db#$%1
+          contact-management.auth.auth-server-uri: "{{ .Values.environment.auth.authServerUrl }}"
+          contact-management.auth.realm: "{{ .Values.environment.auth.realm }}"
+          elastic.apm.enabled: "{{ .Values.environment.apm.enabled }}"
+          elastic.apm.configuration.server_urls: "{{ .Values.environment.apm.serverUrls }}"
+          elastic.apm.configuration.environment: "{{ .Values.environment.apm.environment }}"
+          spring.kafka.bootstrap-servers: "{{ .Values.environment.kafka.bootstrapServers }}"
+          spring.jpa.show-sql: "{{ .Values.environment.spring.showSql }}"
+          logging.level.root: "{{ .Values.environment.loggingLevel.root }}"
+      contact-management-custom-app-dbmig:
+        properties:
+          LIQUIBASE_CHANGELOG_FILE: migrations/contact-management/master.xml
+          LIQUIBASE_DB_URL: "{{ .Values.environment.db.jdbcUrl }}"
+          LIQUIBASE_COMMANDS: update
+          LIQUIBASE_DB_DRIVER: "{{ .Values.environment.db.driver }}"
+          LIQUIBASE_DB_SCHEMA_NAME: irm_contactmanagement_db
+          LIQUIBASE_LOG_LEVEL: info
+          LIQUIBASE_DB_USER: irm_contactmanagement_db
+          LIQUIBASE_DB_PASSWD: irm_contactmanagement_db#$%1
+    envFrom:
+      configMapRefs:
+        - contact-management-custom-app
+        - contact-management-custom-app-dbmig
+      secretRefs: {}
+    ports:
+      - 8080
+    service:
+      type: ClusterIP
+      port: 8080
+      targetPort: 8080
+      nodePort: {}
+    dbmigration: true
+    brms: false
+    ingress:
+      enabled: false
+  kie-server-custom-app:
+    trust:
+      enabled: false
+    enabled: true
+    imageRepository: kie-server-custom-app
+    configmaps:
+      kie-server-custom-app:
+        properties:
+          JAVA_TOOL_OPTIONS: "{{ .Values.environment.kie.javaToolOptions }}"
+          KAFKA_BROKER_URL: "{{ .Values.environment.kie.serverUrl }}"
+          API_GATEWAY_URL: "{{ .Values.environment.kie.apiGatewayUrl }}"
+          UI_CONFIGURATION_URL: "{{ .Values.environment.kie.uiConfigurationKieUrl }}"
+          KEYCLOAK_URL: "{{ .Values.environment.kie.keycloackUrl }}"
+          CONTENT_DATA: "{{ .Values.environment.kie.contentData }}"
+          elastic.apm.enabled: "{{ .Values.environment.apm.enabled }}"
+          elastic.apm.configuration.server_urls: "{{ .Values.environment.apm.serverUrls }}"
+          elastic.apm.configuration.environment: "{{ .Values.environment.apm.environment }}"
+          KIESERVER_DEPLOYMENTS_0_GROUP-ID: "{{ .Values.environment.kie.kieserverDeploymentsGroupId }}"
+          KIESERVER_DEPLOYMENTS_0_ARTIFACT-ID: "{{ .Values.environment.kie.kieserverDeploymentsArtifactId }}"
+          KIESERVER_DEPLOYMENTS_0_CONTAINER-ID: "{{ .Values.environment.kie.kieserverDeploymentsContainerId }}"
+          KIESERVER_DEPLOYMENTS_0_VERSION: "{{ .Values.environment.kie.kieserverDeploymentsVersion }}"
+      kie-server-custom-app-dbmig:
+        properties:
+          LIQUIBASE_CHANGELOG_FILE: migrations/registration/master.xml
+          LIQUIBASE_DB_URL: "{{ .Values.environment.db.jdbcUrl }}"
+          LIQUIBASE_COMMANDS: update
+          LIQUIBASE_DB_DRIVER: "{{ .Values.environment.db.driver }}"
+          LIQUIBASE_DB_SCHEMA_NAME: irm_registration_db
+          LIQUIBASE_LOG_LEVEL: info
+          LIQUIBASE_DB_USER: irm_registration_db
+          LIQUIBASE_DB_PASSWD: irm_registration_db#$%1
+    envFrom:
+      configMapRefs:
+        - kie-server-custom-app
+      secretRefs: {}
+    ports:
+      - 8080
+    service:
+      type: ClusterIP
+      port: 8080
+      targetPort: 8080
+      nodePort: {}
+    dbmigration: false
+    brms: false
+    ingress:
+      enabled: false
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 0
+    resources:
+      limits:
+        cpu: "1"
+        memory: 1500Mi
+        ephemeral-storage: "4Gi"
+      requests:
+        cpu: "0.5"
+        memory: 512Mi
+        ephemeral-storage: "1Gi"
+  operational-plan-custom-app:
+    trust:
+      enabled: false
+    enabled: true
+    imageRepository: operational-plan-custom-app
+    configmaps:
+      operational-plan-custom-app:
+        properties:
+          server.port: 8080
+          spring.datasource.url: "{{ .Values.environment.db.jdbcUrl}}?currentSchema=irm_operational_plan_db"
+          spring.datasource.username: irm_operational_plan_db
+          spring.datasource.password: irm_operational_plan_db#$%1
+          error-handling.rest.reference-data-app-url: "{{ .Values.environment.serviceUrl.referenceDataAppUrl }}"
+          error-handling.rest.translation-management-app-url: "{{ .Values.environment.serviceUrl.translationManagementAppUrl }}"
+          query-management-app-url: "{{ .Values.environment.serviceUrl.queryManagementAppUrl }}"
+          spring.kafka.bootstrap-servers: "{{ .Values.environment.kafka.bootstrapServers }}"
+          spring.jpa.show-sql: "{{ .Values.environment.spring.showSql }}"
+          logging.level.root: "{{ .Values.environment.loggingLevel.root }}"
+          spring.security.oauth2.client.registration.irm-be.client-secret: "{{ .Values.environment.auth.clientSecret }}"
+          spring.security.oauth2.client.registration.irm-be.client-id: "{{ .Values.environment.auth.clientId }}"
+          operational-plan.auth.auth-server-uri: "{{ .Values.environment.auth.authServerUrl }}"
+          operational-plan.auth.realm: "{{ .Values.environment.auth.realm }}"
+          operational-plan.rest.outbound.process-management-app-url: "{{ .Values.environment.serviceUrl.processManagementAppUrl }}"
+          operational-plan.rest.registration-app-url: "{{ .Values.environment.serviceUrl.registrationAppUrl }}"
+      operational-plan-custom-app-dbmig:
+        properties:
+          LIQUIBASE_CHANGELOG_FILE: migrations/operational-plan/master-demo.xml
+          LIQUIBASE_DB_URL: "{{ .Values.environment.db.jdbcUrl }}"
+          LIQUIBASE_COMMANDS: update
+          LIQUIBASE_DB_DRIVER: "{{ .Values.environment.db.driver }}"
+          LIQUIBASE_DB_SCHEMA_NAME: irm_operational_plan_db
+          LIQUIBASE_LOG_LEVEL: info
+          LIQUIBASE_DB_USER: irm_operational_plan_db
+          LIQUIBASE_DB_PASSWD: irm_operational_plan_db#$%1
+    envFrom:
+      configMapRefs:
+        - operational-plan-custom-app
+        - operational-plan-custom-app-dbmig
+      secretRefs: { }
+    ports:
+      - 8080
+    service:
+      type: ClusterIP
+      port: 8080
+      targetPort: 8080
+      nodePort: { }
+    dbmigration: true
+    brms: false
+    ingress:
+      enabled: false
+  process-management-custom-app:
+    trust:
+      enabled: false
+    enabled: true
+    imageRepository: process-management-custom-app
+    configmaps:
+      process-management-custom-app:
+        properties:
+          server.port: 8080
+          spring.datasource.url: "{{ .Values.environment.db.jdbcUrl}}?currentSchema=irm_processmanagement_db"
+          spring.datasource.username: irm_processmanagement_db
+          spring.datasource.password: irm_processmanagement_db#$%1
+          spring.kafka.bootstrap-servers: "{{ .Values.environment.kafka.bootstrapServers }}"
+          error-handling.rest.reference-data-app-url: "{{ .Values.environment.serviceUrl.referenceDataAppUrl }}"
+          error-handling.rest.translation-management-app-url: "{{ .Values.environment.serviceUrl.translationManagementAppUrl }}"
+          process-management.auth.auth-server-uri: "{{ .Values.environment.auth.authServerUrl }}"
+          process-management.auth.realm: "{{ .Values.environment.auth.realm }}"
+          spring.security.oauth2.client.registration.irm-be.client-secret: "{{ .Values.environment.auth.clientSecret }}"
+          spring.security.oauth2.client.registration.irm-be.client-id: "{{ .Values.environment.auth.clientId }}"
+          elastic.apm.enabled: "{{ .Values.environment.apm.enabled }}"
+          elastic.apm.configuration.server_urls: "{{ .Values.environment.apm.serverUrls }}"
+          elastic.apm.configuration.environment: "{{ .Values.environment.apm.environment }}"
+          process-client.server-url: "{{ .Values.environment.kie.serverUrl }}"
+          process-client.api-gateway-url: "{{ .Values.environment.kie.apiGatewayUrl }}"
+          process-management.rest.outbound.taxpayer-accounting-app-url: "{{ .Values.environment.serviceUrl.taxpayerAccountingAppUrl }}"
+          process-management.rest.ui-configuration-app-url: "{{ .Values.environment.serviceUrl.uiConfigurationAppUrl }}"
+          spring.jpa.show-sql: "{{ .Values.environment.spring.showSql }}"
+          logging.level.root: "{{ .Values.environment.loggingLevel.root }}"
+          process-management.rest.outbound.registration: "{{ .Values.environment.serviceUri.registration }}"
+          process-management.rest.outbound.taxpayer-accounting: "{{ .Values.environment.serviceUri.taxpayerAccounting }}"
+          process-management.rest.outbound.currency-exchange: "{{ .Values.environment.serviceUri.currencyExchange }}"
+          process-management.rest.outbound.ui-configuration: "{{ .Values.environment.serviceUri.uiConfiguration }}"
+          process-management.rest.outbound.process-management: "{{ .Values.environment.serviceUri.processManagement }}"
+          process-management.rest.outbound.authorization-management: "{{ .Values.environment.serviceUri.authorizationManagement }}"
+          process-management.rest.outbound.contact-management: "{{ .Values.environment.serviceUri.contactManagement }}"
+          process-management.rest.outbound.case-management: "{{ .Values.environment.serviceUri.caseManagement }}"
+          process-management.rest.outbound.human-task-management: "{{ .Values.environment.serviceUri.humanTaskManagement }}"
+          process-management.rest.outbound.operational-plan: "{{ .Values.environment.serviceUri.operationalPlan }}"
+          process-management.rest.outbound.operational-plan-app-url: "{{ .Values.environment.serviceUrl.operationalPlanAppUrl }}"
+          process-management.rest.outbound.process-engine-app-url: "{{ .Values.environment.serviceUrl.processEngineAppUrl }}"
+      process-management-custom-app-dbmig:
+        properties:
+          LIQUIBASE_CHANGELOG_FILE: migrations/process-management/master.xml
+          LIQUIBASE_DB_URL: "{{ .Values.environment.db.jdbcUrl }}"
+          LIQUIBASE_COMMANDS: update
+          LIQUIBASE_DB_DRIVER: "{{ .Values.environment.db.driver }}"
+          LIQUIBASE_DB_SCHEMA_NAME: irm_processmanagement_db
+          LIQUIBASE_LOG_LEVEL: info
+          LIQUIBASE_DB_USER: irm_processmanagement_db
+          LIQUIBASE_DB_PASSWD: irm_processmanagement_db#$%1
+    envFrom:
+      configMapRefs:
+        - process-management-custom-app
+        - process-management-custom-app-dbmig
+      secretRefs: { }
+    ports:
+      - 8080
+    service:
+      type: ClusterIP
+      port: 8080
+      targetPort: 8080
+      nodePort: { }
+    dbmigration: true
+    brms: false
+    ingress:
+      enabled: false

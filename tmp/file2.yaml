@@ -1,0 +1,1050 @@
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: case-management-custom-app
+  namespace: default
+data:
+    case-management.auth.auth-server-uri: "http://10.240.36.172:30180/auth"
+    case-management.auth.realm: "icarus-e2e"
+    case-management.rest.authorization-app-url: "http://authorization-management-app.e2e-icarus-ms:8080/authorization-management"
+    case-management.rest.document-management-app-url: "http://document-management-app.e2e-icarus-ms:8080/document-management"
+    case-management.rest.entity-version-app-url: "http://entity-version-app.e2e-icarus-ms:8080/entity-version"
+    case-management.rest.human-task-management-app-url: "http://human-task-management-custom-app.e2e-icarus-ms:8080/human-task-management"
+    case-management.rest.outbound.authorization-management: "http://authorization-management-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.case-management: "http://case-management-custom-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.contact-management: "http://contact-management-custom-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.currency-exchange: "http://currency-exchange-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.exception-management: "http://exception-management-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.exception-management-app-url: "http://exception-management-app.e2e-icarus-ms:8080/exception-management"
+    case-management.rest.outbound.human-task-management: "http://human-task-management-custom-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.operational-plan: "http://operational-plan-custom-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.process-management: "http://process-management-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.query-management-app-url: "http://query-management-app.e2e-icarus-ms:8080/query-management"
+    case-management.rest.outbound.registration: "http://registration-custom-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.taxpayer-accounting: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080"
+    case-management.rest.outbound.ui-configuration: "http://ui-configuration-app.e2e-icarus-ms:8080"
+    case-management.rest.process-management-app-url: "http://process-management-app.e2e-icarus-ms:8080/process-management"
+    case-management.rest.query-management-app-url: "http://query-management-app.e2e-icarus-ms:8080/query-management"
+    case-management.rest.registration-app-url: "http://registration-custom-app.e2e-icarus-ms:8080/registration"
+    case-management.rest.taxpayer-accounting-app-url: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080/taxpayer-accounting"
+    case-management.rest.ui-configuration-app-url: "http://ui-configuration-app.e2e-icarus-ms:8080/ui-configuration"
+    elastic.apm.configuration.environment: "e2e"
+    elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+    elastic.apm.enabled: "true"
+    error-handling.rest.reference-data-app-url: "http://reference-data-app.e2e-icarus-ms:8080/reference-data"
+    error-handling.rest.translation-management-app-url: "http://translation-management-app.e2e-icarus-ms:8080/translation-management"
+    kie-client.api-gateway-url: "http://10.240.36.172:30443/api-gateway"
+    kie-client.kie-server-url: "http://drools-runtime-app.e2e-icarus-ms:8080/drools-runtime"
+    logging.level.root: "ERROR"
+    server.port: "8080"
+    spring.datasource.password: "irm_casemanagement_db#$%1"
+    spring.datasource.url: "jdbc:postgresql://10.240.36.198:5432/irm_db?currentSchema=irm_casemanagement_db"
+    spring.datasource.username: "irm_casemanagement_db"
+    spring.jpa.show-sql: "false"
+    spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
+    spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+    spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: case-management-custom-app-dbmig
+  namespace: default
+data:
+    LIQUIBASE_CHANGELOG_FILE: "migrations/case-management/master.xml"
+    LIQUIBASE_COMMANDS: "update"
+    LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+    LIQUIBASE_DB_PASSWD: "irm_casemanagement_db#$%1"
+    LIQUIBASE_DB_SCHEMA_NAME: "irm_casemanagement_db"
+    LIQUIBASE_DB_URL: "jdbc:postgresql://10.240.36.198:5432/irm_db"
+    LIQUIBASE_DB_USER: "irm_casemanagement_db"
+    LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: contact-management-custom-app
+  namespace: default
+data:
+    contact-management.auth.auth-server-uri: "http://10.240.36.172:30180/auth"
+    contact-management.auth.realm: "icarus-e2e"
+    contact-management.reporting.datasource.password: "irm_reporting_db#$%1"
+    contact-management.reporting.datasource.url: "jdbc:postgresql://10.240.36.198:5432/irm_db?currentSchema=irm_reporting_db"
+    contact-management.reporting.datasource.username: "irm_reporting_db"
+    contact-management.rest.direct-debit-app-url: "http://direct-debit-app.e2e-icarus-ms:8080/direct-debit"
+    contact-management.rest.document-management-app-url: "http://document-management-app.e2e-icarus-ms:8080/document-management"
+    contact-management.rest.outbound.authorization-management: "http://authorization-management-app.e2e-icarus-ms:8080"
+    contact-management.rest.outbound.case-management: "http://case-management-custom-app.e2e-icarus-ms:8080"
+    contact-management.rest.outbound.contact-management: "http://contact-management-custom-app.e2e-icarus-ms:8080"
+    contact-management.rest.outbound.currency-exchange: "http://currency-exchange-app.e2e-icarus-ms:8080"
+    contact-management.rest.outbound.direct-debit: "http://direct-debit-app.e2e-icarus-ms:8080"
+    contact-management.rest.outbound.human-task-management: "http://human-task-management-custom-app.e2e-icarus-ms:8080"
+    contact-management.rest.outbound.process-management: "http://process-management-app.e2e-icarus-ms:8080"
+    contact-management.rest.outbound.registration: "http://registration-custom-app.e2e-icarus-ms:8080"
+    contact-management.rest.outbound.taxpayer-accounting: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080"
+    contact-management.rest.outbound.ui-configuration: "http://ui-configuration-app.e2e-icarus-ms:8080"
+    contact-management.rest.registration-app-url: "http://registration-custom-app.e2e-icarus-ms:8080/registration"
+    contact-management.rest.taxpayer-accounting-app-url: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080/taxpayer-accounting"
+    contact-management.rest.ui-configuration-app-url: "http://ui-configuration-app.e2e-icarus-ms:8080/ui-configuration"
+    elastic.apm.configuration.environment: "e2e"
+    elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+    elastic.apm.enabled: "true"
+    error-handling.rest.reference-data-app-url: "http://reference-data-app.e2e-icarus-ms:8080/reference-data"
+    error-handling.rest.translation-management-app-url: "http://translation-management-app.e2e-icarus-ms:8080/translation-management"
+    logging.level.root: "ERROR"
+    server.port: "8080"
+    spring.datasource.password: "irm_contactmanagement_db#$%1"
+    spring.datasource.url: "jdbc:postgresql://10.240.36.198:5432/irm_db?currentSchema=irm_contactmanagement_db"
+    spring.datasource.username: "irm_contactmanagement_db"
+    spring.jpa.show-sql: "false"
+    spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
+    spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+    spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: contact-management-custom-app-dbmig
+  namespace: default
+data:
+    LIQUIBASE_CHANGELOG_FILE: "migrations/contact-management/master.xml"
+    LIQUIBASE_COMMANDS: "update"
+    LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+    LIQUIBASE_DB_PASSWD: "irm_contactmanagement_db#$%1"
+    LIQUIBASE_DB_SCHEMA_NAME: "irm_contactmanagement_db"
+    LIQUIBASE_DB_URL: "jdbc:postgresql://10.240.36.198:5432/irm_db"
+    LIQUIBASE_DB_USER: "irm_contactmanagement_db"
+    LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: human-task-management-custom-app
+  namespace: default
+data:
+    error-handling.rest.reference-data-app-url: "http://reference-data-app.e2e-icarus-ms:8080/reference-data"
+    error-handling.rest.translation-management-app-url: "http://translation-management-app.e2e-icarus-ms:8080/translation-management"
+    human-management.rest.outbound.exception-management: "http://exception-management-app.e2e-icarus-ms:8080"
+    human-task-management.auth.auth-server-uri: "http://10.240.36.172:30180/auth"
+    human-task-management.auth.realm: "icarus-e2e"
+    human-task-management.rest.case-management-app-url: "http://case-management-custom-app.e2e-icarus-ms:8080/case-management"
+    human-task-management.rest.outbound.authorization-management: "http://authorization-management-app.e2e-icarus-ms:8080"
+    human-task-management.rest.outbound.authorization-management-app-url: "http://authorization-management-app.e2e-icarus-ms:8080/authorization-management"
+    human-task-management.rest.outbound.case-management: "http://case-management-custom-app.e2e-icarus-ms:8080"
+    human-task-management.rest.outbound.contact-management: "http://contact-management-custom-app.e2e-icarus-ms:8080"
+    human-task-management.rest.outbound.currency-exchange: "http://currency-exchange-app.e2e-icarus-ms:8080"
+    human-task-management.rest.outbound.entity-version-app-url: "http://entity-version-app.e2e-icarus-ms:8080/entity-version"
+    human-task-management.rest.outbound.exception-management-app-url: "http://exception-management-app.e2e-icarus-ms:8080/exception-management"
+    human-task-management.rest.outbound.human-task-management: "http://human-task-management-custom-app.e2e-icarus-ms:8080"
+    human-task-management.rest.outbound.process-management: "http://process-management-app.e2e-icarus-ms:8080"
+    human-task-management.rest.outbound.process-management-app-url: "http://process-management-app.e2e-icarus-ms:8080/process-management"
+    human-task-management.rest.outbound.query-management-app-url: "http://query-management-app.e2e-icarus-ms:8080/query-management"
+    human-task-management.rest.outbound.registration: "http://registration-custom-app.e2e-icarus-ms:8080"
+    human-task-management.rest.outbound.taxpayer-accounting: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080"
+    human-task-management.rest.outbound.taxpayer-accounting-app-url: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080/taxpayer-accounting"
+    human-task-management.rest.outbound.ui-configuration: "http://ui-configuration-app.e2e-icarus-ms:8080"
+    human-task-management.rest.outbound.ui-configuration-app-url: "http://ui-configuration-app.e2e-icarus-ms:8080/ui-configuration"
+    kie-client.api-gateway-url: "http://10.240.36.172:30443/api-gateway"
+    kie-client.kie-server-url: "http://drools-runtime-app.e2e-icarus-ms:8080/drools-runtime"
+    logging.level.root: "ERROR"
+    server.port: "8080"
+    spring.datasource.password: "irm_humantaskmanagement_db#$%1"
+    spring.datasource.url: "jdbc:postgresql://10.240.36.198:5432/irm_db?currentSchema=irm_humantaskmanagement_db"
+    spring.datasource.username: "irm_humantaskmanagement_db"
+    spring.jpa.show-sql: "false"
+    spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
+    spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+    spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: human-task-management-custom-app-dbmig
+  namespace: default
+data:
+    LIQUIBASE_CHANGELOG_FILE: "migrations/human-task-management/master.xml"
+    LIQUIBASE_COMMANDS: "update"
+    LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+    LIQUIBASE_DB_PASSWD: "irm_humantaskmanagement_db#$%1"
+    LIQUIBASE_DB_SCHEMA_NAME: "irm_humantaskmanagement_db"
+    LIQUIBASE_DB_URL: "jdbc:postgresql://10.240.36.198:5432/irm_db"
+    LIQUIBASE_DB_USER: "irm_humantaskmanagement_db"
+    LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: operational-plan-custom-app
+  namespace: default
+data:
+    elastic.apm.configuration.environment: "e2e"
+    elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+    elastic.apm.enabled: "true"
+    error-handling.rest.reference-data-app-url: "http://reference-data-app.e2e-icarus-ms:8080/reference-data"
+    error-handling.rest.translation-management-app-url: "http://translation-management-app.e2e-icarus-ms:8080/translation-management"
+    logging.level.root: "ERROR"
+    operational-plan.auth.auth-server-uri: "http://10.240.36.172:30180/auth"
+    operational-plan.auth.realm: "icarus-e2e"
+    operational-plan.kafka.inbound.plan-status-transition-topic: "irm.bpmn-engine.update-operational-plan-status"
+    operational-plan.rest.outbound.case-management-app-url: "http://case-management-custom-app.e2e-icarus-ms:8080/case-management"
+    operational-plan.rest.outbound.process-management-app-url: "http://process-management-app.e2e-icarus-ms:8080/process-management"
+    operational-plan.rest.registration-app-url: "http://registration-custom-app.e2e-icarus-ms:8080/registration"
+    query-management-app-url: "http://query-management-app.e2e-icarus-ms:8080/query-management"
+    server.port: "8080"
+    spring.datasource.password: "irm_operational_plan_db#$%1"
+    spring.datasource.url: "jdbc:postgresql://10.240.36.198:5432/irm_db?currentSchema=irm_operational_plan_db"
+    spring.datasource.username: "irm_operational_plan_db"
+    spring.jpa.show-sql: "false"
+    spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
+    spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+    spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: operational-plan-custom-app-dbmig
+  namespace: default
+data:
+    LIQUIBASE_CHANGELOG_FILE: "migrations/operational-plan/master-demo.xml"
+    LIQUIBASE_COMMANDS: "update"
+    LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+    LIQUIBASE_DB_PASSWD: "irm_operational_plan_db#$%1"
+    LIQUIBASE_DB_SCHEMA_NAME: "irm_operational_plan_db"
+    LIQUIBASE_DB_URL: "jdbc:postgresql://10.240.36.198:5432/irm_db"
+    LIQUIBASE_DB_USER: "irm_operational_plan_db"
+    LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: process-management-custom-app
+  namespace: default
+data:
+    elastic.apm.configuration.environment: "e2e"
+    elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+    elastic.apm.enabled: "true"
+    error-handling.rest.reference-data-app-url: "http://reference-data-app.e2e-icarus-ms:8080/reference-data"
+    error-handling.rest.translation-management-app-url: "http://translation-management-app.e2e-icarus-ms:8080/translation-management"
+    logging.level.root: "ERROR"
+    process-client.api-gateway-url: "http://10.240.36.172:30443/api-gateway"
+    process-client.server-url: "http://kie-server-custom-app.e2e-icarus-ms:8080/kie-server/services/rest/server"
+    process-management.auth.auth-server-uri: "http://10.240.36.172:30180/auth"
+    process-management.auth.realm: "icarus-e2e"
+    process-management.process-engine-client: "camunda"
+    process-management.rest.outbound.authorization-management: "http://authorization-management-app.e2e-icarus-ms:8080"
+    process-management.rest.outbound.case-management: "http://case-management-custom-app.e2e-icarus-ms:8080"
+    process-management.rest.outbound.contact-management: "http://contact-management-custom-app.e2e-icarus-ms:8080"
+    process-management.rest.outbound.currency-exchange: "http://currency-exchange-app.e2e-icarus-ms:8080"
+    process-management.rest.outbound.human-task-management: "http://human-task-management-custom-app.e2e-icarus-ms:8080"
+    process-management.rest.outbound.operational-plan: "http://operational-plan-custom-app.e2e-icarus-ms:8080"
+    process-management.rest.outbound.operational-plan-app-url: "http://operational-plan-custom-app.e2e-icarus-ms:8080/operational-plan"
+    process-management.rest.outbound.process-engine-app-url: "http://process-engine-camunda-app.e2e-icarus-adapters:8080/process-engine-camunda"
+    process-management.rest.outbound.process-management: "http://process-management-app.e2e-icarus-ms:8080"
+    process-management.rest.outbound.registration: "http://registration-custom-app.e2e-icarus-ms:8080"
+    process-management.rest.outbound.taxpayer-accounting: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080"
+    process-management.rest.outbound.taxpayer-accounting-app-url: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080/taxpayer-accounting"
+    process-management.rest.outbound.ui-configuration: "http://ui-configuration-app.e2e-icarus-ms:8080"
+    process-management.rest.ui-configuration-app-url: "http://ui-configuration-app.e2e-icarus-ms:8080/ui-configuration"
+    server.port: "8080"
+    spring.datasource.password: "irm_processmanagement_db#$%1"
+    spring.datasource.url: "jdbc:postgresql://10.240.36.198:5432/irm_db?currentSchema=irm_processmanagement_db"
+    spring.datasource.username: "irm_processmanagement_db"
+    spring.jpa.show-sql: "false"
+    spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
+    spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+    spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: process-management-custom-app-dbmig
+  namespace: default
+data:
+    LIQUIBASE_CHANGELOG_FILE: "migrations/process-management/master.xml"
+    LIQUIBASE_COMMANDS: "update"
+    LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+    LIQUIBASE_DB_PASSWD: "irm_processmanagement_db#$%1"
+    LIQUIBASE_DB_SCHEMA_NAME: "irm_processmanagement_db"
+    LIQUIBASE_DB_URL: "jdbc:postgresql://10.240.36.198:5432/irm_db"
+    LIQUIBASE_DB_USER: "irm_processmanagement_db"
+    LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: registration-custom-app
+  namespace: default
+data:
+    elastic.apm.configuration.environment: "e2e"
+    elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+    elastic.apm.enabled: "true"
+    error-handling.rest.reference-data-app-url: "http://reference-data-app.e2e-icarus-ms:8080/reference-data"
+    error-handling.rest.translation-management-app-url: "http://translation-management-app.e2e-icarus-ms:8080/translation-management"
+    gateway.auth.auth-server-uri: "http://10.240.36.172:30180/auth"
+    gateway.auth.realm: "icarus-e2e"
+    kie-client.api-gateway-url: "http://10.240.36.172:30443/api-gateway"
+    kie-client.kie-server-url: "http://drools-runtime-app.e2e-icarus-ms:8080/drools-runtime"
+    logging.level.root: "ERROR"
+    query-management-app-url: "http://query-management-app.e2e-icarus-ms:8080/query-management"
+    registration.rest.authorization-management-app-url: "http://authorization-management-app.e2e-icarus-ms:8080/authorization-management"
+    registration.rest.contact-management-app-url: "http://contact-management-custom-app.e2e-icarus-ms:8080/contact-management"
+    registration.rest.taxpayer-accounting-app-url: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080/taxpayer-accounting"
+    registration.rest.ui-configuration-app-url: "http://ui-configuration-app.e2e-icarus-ms:8080/ui-configuration"
+    server.port: "8080"
+    spring.datasource.password: "irm_registration_db#$%1"
+    spring.datasource.url: "jdbc:postgresql://10.240.36.198:5432/irm_db?currentSchema=irm_registration_db"
+    spring.datasource.username: "irm_registration_db"
+    spring.jpa.show-sql: "false"
+    spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: registration-custom-app-dbmig
+  namespace: default
+data:
+    LIQUIBASE_CHANGELOG_FILE: "migrations/registration/master.xml"
+    LIQUIBASE_COMMANDS: "update"
+    LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+    LIQUIBASE_DB_PASSWD: "irm_registration_db#$%1"
+    LIQUIBASE_DB_SCHEMA_NAME: "irm_registration_db"
+    LIQUIBASE_DB_URL: "jdbc:postgresql://10.240.36.198:5432/irm_db"
+    LIQUIBASE_DB_USER: "irm_registration_db"
+    LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: taxpayer-accounting-custom-app
+  namespace: default
+data:
+    elastic.apm.configuration.environment: "e2e"
+    elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+    elastic.apm.enabled: "true"
+    error-handling.rest.reference-data-app-url: "http://reference-data-app.e2e-icarus-ms:8080/reference-data"
+    error-handling.rest.translation-management-app-url: "http://translation-management-app.e2e-icarus-ms:8080/translation-management"
+    kie-client.api-gateway-url: "http://10.240.36.172:30443/api-gateway"
+    kie-client.kie-server-url: "http://drools-runtime-app.e2e-icarus-ms:8080/drools-runtime"
+    logging.level.root: "ERROR"
+    server.port: "8080"
+    spring.datasource.password: "irm_taxpayeraccounting_db#$%1"
+    spring.datasource.url: "jdbc:postgresql://10.240.36.198:5432/irm_db?currentSchema=irm_taxpayeraccounting_db"
+    spring.datasource.username: "irm_taxpayeraccounting_db"
+    spring.jpa.show-sql: "false"
+    spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
+    spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+    spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+    taxpayer-accounting.auth.auth-server-uri: "http://10.240.36.172:30180/auth"
+    taxpayer-accounting.auth.realm: "icarus-e2e"
+    taxpayer-accounting.pi.include-all-segments: "true"
+    taxpayer-accounting.pi.validate-segments: "false"
+    taxpayer-accounting.rest.case-management-app-url: "http://case-management-custom-app.e2e-icarus-ms:8080/case-management"
+    taxpayer-accounting.rest.contact-management-app-url: "http://contact-management-custom-app.e2e-icarus-ms:8080/contact-management"
+    taxpayer-accounting.rest.currency-exchange-app-url: "http://currency-exchange-app.e2e-icarus-ms:8080/currency-exchange"
+    taxpayer-accounting.rest.entity-version-app-url: "http://entity-version-app.e2e-icarus-ms:8080/entity-version"
+    taxpayer-accounting.rest.exception-management-app-url: "http://exception-management-app.e2e-icarus-ms:8080/exception-management"
+    taxpayer-accounting.rest.external-adapter.distribution-app-url: "http://distribution-app.e2e-icarus-adapters:8080/distribution"
+    taxpayer-accounting.rest.external-adapter.penalty-interest-app-url: "http://penalty-interest-app.e2e-icarus-adapters:8080/penalty-interest"
+    taxpayer-accounting.rest.human-task-management-app-url: "http://human-task-management-custom-app.e2e-icarus-ms:8080/human-task-management"
+    taxpayer-accounting.rest.outbound.authorization-management: "http://authorization-management-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.outbound.case-management: "http://case-management-custom-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.outbound.contact-management: "http://contact-management-custom-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.outbound.currency-exchange: "http://currency-exchange-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.outbound.exception-management: "http://exception-management-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.outbound.human-task-management: "http://human-task-management-custom-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.outbound.process-management: "http://process-management-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.outbound.registration: "http://registration-custom-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.outbound.taxpayer-accounting: "http://taxpayer-accounting-custom-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.outbound.ui-configuration: "http://ui-configuration-app.e2e-icarus-ms:8080"
+    taxpayer-accounting.rest.process-management-app-url: "http://process-management-app.e2e-icarus-ms:8080/process-management"
+    taxpayer-accounting.rest.query-management-app-url: "http://query-management-app.e2e-icarus-ms:8080/query-management"
+    taxpayer-accounting.rest.registration-app-url: "http://registration-custom-app.e2e-icarus-ms:8080/registration"
+    taxpayer-accounting.rest.ui-configuration-app-url: "http://ui-configuration-app.e2e-icarus-ms:8080/ui-configuration"
+---
+# Source: revenue-management-be-custom/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: taxpayer-accounting-custom-app-dbmig
+  namespace: default
+data:
+    LIQUIBASE_CHANGELOG_FILE: "migrations/taxpayer-accounting/master.xml"
+    LIQUIBASE_COMMANDS: "update"
+    LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+    LIQUIBASE_DB_PASSWD: "irm_taxpayeraccounting_db#$%1"
+    LIQUIBASE_DB_SCHEMA_NAME: "irm_taxpayeraccounting_db"
+    LIQUIBASE_DB_URL: "jdbc:postgresql://10.240.36.198:5432/irm_db"
+    LIQUIBASE_DB_USER: "irm_taxpayeraccounting_db"
+    LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be-custom/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "case-management-custom-app"
+  labels:
+    chart: "revenue-management-be-custom"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "case-management-custom-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be-custom/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "contact-management-custom-app"
+  labels:
+    chart: "revenue-management-be-custom"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "contact-management-custom-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be-custom/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "human-task-management-custom-app"
+  labels:
+    chart: "revenue-management-be-custom"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "human-task-management-custom-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be-custom/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "operational-plan-custom-app"
+  labels:
+    chart: "revenue-management-be-custom"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "operational-plan-custom-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be-custom/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "process-management-custom-app"
+  labels:
+    chart: "revenue-management-be-custom"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "process-management-custom-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be-custom/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "registration-custom-app"
+  labels:
+    chart: "revenue-management-be-custom"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "registration-custom-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be-custom/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "taxpayer-accounting-custom-app"
+  labels:
+    chart: "revenue-management-be-custom"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "taxpayer-accounting-custom-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be-custom/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "case-management-custom-app"
+  labels:
+    app: "case-management-custom-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: "case-management-custom-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "case-management-custom-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: case-management-custom-app-dbmig
+        image: 1.12.0/revenue-management-db-migration:latest-snapshot
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: case-management-custom-app
+        - configMapRef:
+            name: case-management-custom-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "case-management-custom-app"
+        image: "1.12.0/case-management-custom-app:1.11.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+############################
+##############################
+        envFrom:
+        - configMapRef:
+            name: case-management-custom-app
+        - configMapRef:
+            name: case-management-custom-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+      volumes:
+---
+# Source: revenue-management-be-custom/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "contact-management-custom-app"
+  labels:
+    app: "contact-management-custom-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: "contact-management-custom-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "contact-management-custom-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: contact-management-custom-app-dbmig
+        image: 1.12.0/revenue-management-db-migration:latest-snapshot
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: contact-management-custom-app
+        - configMapRef:
+            name: contact-management-custom-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "contact-management-custom-app"
+        image: "1.12.0/contact-management-custom-app:1.11.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+############################
+##############################
+        envFrom:
+        - configMapRef:
+            name: contact-management-custom-app
+        - configMapRef:
+            name: contact-management-custom-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+      volumes:
+---
+# Source: revenue-management-be-custom/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "human-task-management-custom-app"
+  labels:
+    app: "human-task-management-custom-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: "human-task-management-custom-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "human-task-management-custom-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: human-task-management-custom-app-dbmig
+        image: 1.12.0/revenue-management-db-migration:latest-snapshot
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: human-task-management-custom-app
+        - configMapRef:
+            name: human-task-management-custom-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "human-task-management-custom-app"
+        image: "1.12.0/human-task-management-custom-app:1.11.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+############################
+##############################
+        envFrom:
+        - configMapRef:
+            name: human-task-management-custom-app
+        - configMapRef:
+            name: human-task-management-custom-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+      volumes:
+---
+# Source: revenue-management-be-custom/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "operational-plan-custom-app"
+  labels:
+    app: "operational-plan-custom-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: "operational-plan-custom-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "operational-plan-custom-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: operational-plan-custom-app-dbmig
+        image: 1.12.0/revenue-management-db-migration:latest-snapshot
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: operational-plan-custom-app
+        - configMapRef:
+            name: operational-plan-custom-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "operational-plan-custom-app"
+        image: "1.12.0/operational-plan-custom-app:1.11.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+############################
+##############################
+        envFrom:
+        - configMapRef:
+            name: operational-plan-custom-app
+        - configMapRef:
+            name: operational-plan-custom-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+      volumes:
+---
+# Source: revenue-management-be-custom/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "process-management-custom-app"
+  labels:
+    app: "process-management-custom-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: "process-management-custom-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "process-management-custom-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: process-management-custom-app-dbmig
+        image: 1.12.0/revenue-management-db-migration:latest-snapshot
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: process-management-custom-app
+        - configMapRef:
+            name: process-management-custom-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "process-management-custom-app"
+        image: "1.12.0/process-management-custom-app:1.11.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+############################
+##############################
+        envFrom:
+        - configMapRef:
+            name: process-management-custom-app
+        - configMapRef:
+            name: process-management-custom-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+      volumes:
+---
+# Source: revenue-management-be-custom/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "registration-custom-app"
+  labels:
+    app: "registration-custom-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: "registration-custom-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "registration-custom-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: registration-custom-app-dbmig
+        image: 1.12.0/revenue-management-db-migration:latest-snapshot
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: registration-custom-app
+        - configMapRef:
+            name: registration-custom-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "registration-custom-app"
+        image: "1.12.0/registration-custom-app:1.11.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+############################
+##############################
+        envFrom:
+        - configMapRef:
+            name: registration-custom-app
+        - configMapRef:
+            name: registration-custom-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+      volumes:
+---
+# Source: revenue-management-be-custom/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "taxpayer-accounting-custom-app"
+  labels:
+    app: "taxpayer-accounting-custom-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: "taxpayer-accounting-custom-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "taxpayer-accounting-custom-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: taxpayer-accounting-custom-app-dbmig
+        image: 1.12.0/revenue-management-db-migration:latest-snapshot
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: taxpayer-accounting-custom-app
+        - configMapRef:
+            name: taxpayer-accounting-custom-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "taxpayer-accounting-custom-app"
+        image: "1.12.0/taxpayer-accounting-custom-app:1.11.0"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+############################
+##############################
+        envFrom:
+        - configMapRef:
+            name: taxpayer-accounting-custom-app
+        - configMapRef:
+            name: taxpayer-accounting-custom-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+      volumes:
