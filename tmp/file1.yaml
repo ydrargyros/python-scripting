@@ -47,7 +47,7 @@ data:
   spring.jpa.show-sql: "false"
   spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
   spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
-  spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+ 
 ---
 # Source: revenue-management-be-custom/templates/configmap.yaml
 apiVersion: v1
@@ -105,7 +105,7 @@ data:
   spring.jpa.show-sql: "false"
   spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
   spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
-  spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+
 ---
 # Source: revenue-management-be-custom/templates/configmap.yaml
 apiVersion: v1
@@ -162,7 +162,7 @@ data:
   spring.jpa.show-sql: "false"
   spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
   spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
-  spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+
 ---
 # Source: revenue-management-be-custom/templates/configmap.yaml
 apiVersion: v1
@@ -186,7 +186,7 @@ metadata:
   name: kie-server-custom-app
 data:
   API_GATEWAY_URL: "http://10.240.36.172:30443/api-gateway"
-  CONTENT_DATA: "grant_type=client_credentials&client_secret=caeae0a3-353b-4445-abeb-a28090189c8a&client_id=revenue-management-be-admin"
+
   JAVA_TOOL_OPTIONS: "-Dorg.jbpm.var.log.length=50000 -XX:+IgnoreUnrecognizedVMOptions -XX:+PortableSharedCache -XX:+IdleTuningGcOnIdle -Xshareclasses:name=openj9_system_scc,cacheDir=/opt/java/.scc,readonly,nonFatal"
   KAFKA_BROKER_URL: "kafka-headless.e2e-icarus-kafka:9092"
   KEYCLOAK_URL: "http://10.240.36.172:30180/auth/realms/icarus-e2e/protocol/openid-connect/token"
@@ -230,7 +230,7 @@ data:
   spring.jpa.show-sql: "false"
   spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
   spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
-  spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+
 ---
 # Source: revenue-management-be-custom/templates/configmap.yaml
 apiVersion: v1
@@ -287,7 +287,7 @@ data:
   spring.jpa.show-sql: "false"
   spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
   spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
-  spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+
 ---
 # Source: revenue-management-be-custom/templates/configmap.yaml
 apiVersion: v1
@@ -373,7 +373,7 @@ data:
   spring.jpa.show-sql: "false"
   spring.kafka.bootstrap-servers: "kafka-headless.e2e-icarus-kafka:9092"
   spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
-  spring.security.oauth2.client.registration.irm-be.client-secret: "caeae0a3-353b-4445-abeb-a28090189c8a"
+
   taxpayer-accounting.auth.auth-server-uri: "http://10.240.36.172:30180/auth"
   taxpayer-accounting.auth.realm: "icarus-e2e"
   taxpayer-accounting.pi.include-all-segments: "true"
