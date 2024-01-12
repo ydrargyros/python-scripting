@@ -1,0 +1,2046 @@
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gateway-app
+data:
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  gateway.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  gateway.auth.realm: "icarus-azdemo"
+  gateway.uri.allocation: "http://allocation-app.azdemo-icarus-adapters:8080"
+  gateway.uri.api-gateway-extenal: "http://10.240.36.80:30743"
+  gateway.uri.authorization-management: "http://authorization-management-app.azdemo-icarus-ms:8080"
+  gateway.uri.case-management: "http://case-management-custom-app.azdemo-icarus-ms:8080"
+  gateway.uri.contact-management: "http://contact-management-custom-app.azdemo-icarus-ms:8080"
+  gateway.uri.currency-exchange: "http://currency-exchange-app.azdemo-icarus-ms:8080"
+  gateway.uri.distribution: "http://distribution-app.azdemo-icarus-adapters:8080"
+  gateway.uri.document-management: "http://document-management-app.azdemo-icarus-ms:8080"
+  gateway.uri.document-management-external: "http://document-management-cmis-app.azdemo-icarus-adapters:8080"
+  gateway.uri.entity-version: "http://entity-version-app.azdemo-icarus-ms:8080"
+  gateway.uri.exception-management: "http://exception-management-app.azdemo-icarus-ms:8080"
+  gateway.uri.form-processing: "http://form-processing-app.azdemo-icarus-ms:8080"
+  gateway.uri.human-task-management: "http://human-task-management-custom-app.azdemo-icarus-ms:8080"
+  gateway.uri.notification: "http://notification-app.azdemo-icarus-ms:8080"
+  gateway.uri.penalty-interest: "http://penalty-interest-app.azdemo-icarus-adapters:8080"
+  gateway.uri.process-engine-camunda: "http://process-engine-camunda-app.azdemo-icarus-adapters:8080"
+  gateway.uri.process-management: "http://process-management-app.azdemo-icarus-ms:8080"
+  gateway.uri.query-management: "http://query-management-app.azdemo-icarus-ms:8080"
+  gateway.uri.reference-data: "http://reference-data-app.azdemo-icarus-ms:8080"
+  gateway.uri.registration: "http://registration-custom-app.azdemo-icarus-ms:8080"
+  gateway.uri.self-service: "http://self-service-app.azdemo-icarus-adapters:8080"
+  gateway.uri.taxpayer-accounting: "http://taxpayer-accounting-custom-app.azdemo-icarus-ms:8080"
+  gateway.uri.translation-management: "http://translation-management-app.azdemo-icarus-ms:8080"
+  gateway.uri.ui-configuration: "http://ui-configuration-app.azdemo-icarus-ms:8080"
+  gateway.uri.user-management: "http://user-management-app.azdemo-icarus-adapters:8080"
+  logging.level.com.intrasoft.icarus.revenuemanagement.api.gateway.app.ApiGatewayApplication: "INFO"
+  logging.level.com.intrasoft.icarus.revenuemanagement.api.gateway.app.authorization.AuthorizationFilter: "ERROR"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.redis.host: "redis-master.azdemo-icarus-redis"
+  spring.redis.port: "6379"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: currency-exchange-app
+data:
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  error-handling.rest.reference-data-app-url: "http://reference-data-app.azdemo-icarus-ms:8080/reference-data"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  gateway.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  gateway.auth.realm: "icarus-azdemo"
+  logging.level.com.intrasoft.icarus.revenuemanagement.currencyexchange.CurrencyExchangeApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.datasource.password: "irm_currencyexchange_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_currencyexchange_db"
+  spring.datasource.username: "irm_currencyexchange_db"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: currency-exchange-app-dbmig
+data:
+  LIQUIBASE_CHANGELOG_FILE: "migrations/currency-exchange/master.xml"
+  LIQUIBASE_COMMANDS: "update"
+  LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+  LIQUIBASE_DB_PASSWD: "irm_currencyexchange_db#$%1"
+  LIQUIBASE_DB_SCHEMA_NAME: "public"
+  LIQUIBASE_DB_URL: "jdbc:postgresql://10.241.69.4:5432/irm_currencyexchange_db"
+  LIQUIBASE_DB_USER: "irm_currencyexchange_db"
+  LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: form-processing-app
+data:
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  gateway.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  gateway.auth.realm: "icarus-azdemo"
+  logging.level.com.intrasoft.icarus.revenuemanagement.formprocessing.app.FormProcessingApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.datasource.password: "irm_formprocessing_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_formprocessing_db"
+  spring.datasource.username: "irm_formprocessing_db"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ui-configuration-app
+data:
+  audit.enabled: "true"
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  error-handling.rest.reference-data-app-url: "http://reference-data-app.azdemo-icarus-ms:8080/reference-data"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  kie-client.api-gateway-url: "http://api-gateway-app.azdemo-icarus-ms:8080/api-gateway"
+  kie-client.kie-server-url: "http://icarus-bcw-80service.azdemo-icarus-bcw:8080/kie-server/services/rest/server"
+  logging.level.com.intrasoft.icarus.revenuemanagement.uiconfiguration.UIConfigurationApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.datasource.password: "irm_uiconfiguration_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_uiconfiguration_db"
+  spring.datasource.username: "irm_uiconfiguration_db"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+  spring.redis.host: "redis-master.azdemo-icarus-redis"
+  spring.redis.port: "6379"
+  spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+  spring.security.oauth2.client.registration.irm-be.client-secret: "01fee844-e0c4-4fe7-b9fb-cf1a4558af08"
+  ui-configuration.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  ui-configuration.auth.realm: "icarus-azdemo"
+  ui-configuration.rest.authorization-management-app-url: "http://authorization-management-app.azdemo-icarus-ms:8080/authorization-management"
+  ui-configuration.rest.document-management-app-url: "http://document-management-app.azdemo-icarus-ms:8080/document-management"
+  ui-configuration.rest.entity-version-app-url: "http://entity-version-app.azdemo-icarus-ms:8080/entity-version"
+  ui-configuration.rest.exception-management-app-url: "http://exception-management-app.azdemo-icarus-ms:8080/exception-management"
+  ui-configuration.rest.process-management-app-url: "http://process-management-app.azdemo-icarus-ms:8080/process-management"
+  ui-configuration.rest.registration-app-url: "http://registration-custom-app.azdemo-icarus-ms:8080/registration"
+  ui-configuration.rest.taxpayer-accounting-app-url: "http://taxpayer-accounting-custom-app.azdemo-icarus-ms:8080/taxpayer-accounting"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ui-configuration-app-dbmig
+data:
+  LIQUIBASE_CHANGELOG_FILE: "migrations/ui-configuration/master.xml"
+  LIQUIBASE_COMMANDS: "update"
+  LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+  LIQUIBASE_DB_PASSWD: "irm_uiconfiguration_db#$%1"
+  LIQUIBASE_DB_SCHEMA_NAME: "public"
+  LIQUIBASE_DB_URL: "jdbc:postgresql://10.241.69.4:5432/irm_uiconfiguration_db"
+  LIQUIBASE_DB_USER: "irm_uiconfiguration_db"
+  LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: audit-app
+data:
+  audit-app.audit-log-entry-index: "audit-log-stg"
+  audit-app.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  audit-app.auth.realm: "icarus-azdemo"
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  logging.level.com.intrasoft.icarus.revenuemanagement.audit.AuditApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.datasource.password: "irm_audit_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_audit_db"
+  spring.datasource.username: "irm_audit_db"
+  spring.elasticsearch.uris: "http://elasticsearch.swpd:30100"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: process-management-app
+data:
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  error-handling.rest.reference-data-app-url: "http://reference-data-app.azdemo-icarus-ms:8080/reference-data"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  logging.level.com.intrasoft.icarus.revenuemanagement.processmanagement.ProcessManagementApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  process-client.api-gateway-url: "http://api-gateway-app.azdemo-icarus-ms:8080"
+  process-client.server-url: "http://icarus-bcw-80service.azdemo-icarus-bcw:8080/kie-server/services/rest/server"
+  process-management.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  process-management.auth.realm: "icarus-azdemo"
+  process-management.rest.outbound.authorization-management: "http://authorization-management-app.azdemo-icarus-ms:8080"
+  process-management.rest.outbound.case-management: "http://case-management-custom-app.azdemo-icarus-ms:8080"
+  process-management.rest.outbound.contact-management: "http://contact-management-custom-app.azdemo-icarus-ms:8080"
+  process-management.rest.outbound.currency-exchange: "http://currency-exchange-app.azdemo-icarus-ms:8080"
+  process-management.rest.outbound.human-task-management: "http://human-task-management-custom-app.azdemo-icarus-ms:8080"
+  process-management.rest.outbound.operational-plan: "http://operational-plan-custom-app.azdemo-icarus-ms:8080"
+  process-management.rest.outbound.operational-plan-app-url: "http://operational-plan-custom-app.azdemo-icarus-ms:8080/operational-plan"
+  process-management.rest.outbound.process-engine-app-url: "http://process-engine-camunda-app.azdemo-icarus-adapters:8080/process-engine-camunda"
+  process-management.rest.outbound.process-management: "http://process-management-app.azdemo-icarus-ms:8080"
+  process-management.rest.outbound.registration: "http://registration-custom-app.azdemo-icarus-ms:8080"
+  process-management.rest.outbound.taxpayer-accounting: "http://taxpayer-accounting-custom-app.azdemo-icarus-ms:8080"
+  process-management.rest.outbound.taxpayer-accounting-app-url: "http://taxpayer-accounting-custom-app.azdemo-icarus-ms:8080/taxpayer-accounting"
+  process-management.rest.outbound.ui-configuration: "http://ui-configuration-app.azdemo-icarus-ms:8080"
+  process-management.rest.ui-configuration-app-url: "http://ui-configuration-app.azdemo-icarus-ms:8080/ui-configuration"
+  server.port: "8080"
+  spring.datasource.password: "irm_processmanagement_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_processmanagement_db"
+  spring.datasource.username: "irm_processmanagement_db"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+  spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+  spring.security.oauth2.client.registration.irm-be.client-secret: "01fee844-e0c4-4fe7-b9fb-cf1a4558af08"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: process-management-app-dbmig
+data:
+  LIQUIBASE_CHANGELOG_FILE: "migrations/process-management/master.xml"
+  LIQUIBASE_COMMANDS: "update"
+  LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+  LIQUIBASE_DB_PASSWD: "irm_processmanagement_db#$%1"
+  LIQUIBASE_DB_SCHEMA_NAME: "public"
+  LIQUIBASE_DB_URL: "jdbc:postgresql://10.241.69.4:5432/irm_processmanagement_db"
+  LIQUIBASE_DB_USER: "irm_processmanagement_db"
+  LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: document-management-app
+data:
+  document-management.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  document-management.auth.realm: "icarus-azdemo"
+  document-management.rest.external-adapter.document-management-app-url: "http://document-management-cmis-app.azdemo-icarus-adapters:8080/document-management-cmis"
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  error-handling.rest.reference-data-app-url: "http://reference-data-app.azdemo-icarus-ms:8080/reference-data"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  logging.level.com.intrasoft.icarus.revenuemanagement.documentmanagement.DocumentManagementApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.datasource.password: "irm_documentmanagement_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_documentmanagement_db"
+  spring.datasource.username: "irm_documentmanagement_db"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: document-management-app-dbmig
+data:
+  LIQUIBASE_CHANGELOG_FILE: "migrations/document-management/master.xml"
+  LIQUIBASE_COMMANDS: "update"
+  LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+  LIQUIBASE_DB_PASSWD: "irm_documentmanagement_db#$%1"
+  LIQUIBASE_DB_SCHEMA_NAME: "public"
+  LIQUIBASE_DB_URL: "jdbc:postgresql://10.241.69.4:5432/irm_documentmanagement_db"
+  LIQUIBASE_DB_USER: "irm_documentmanagement_db"
+  LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reference-data-app
+data:
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  logging.level.com.intrasoft.icarus.revenuemanagement.referencedata.ReferenceDataApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  reference-data.reference-data-server-url: "http://ref-data-mgt-bs.azdemo-icarus-refdata:8080/referencedata/api"
+  server.port: "8080"
+  spring.redis.host: "redis-master.azdemo-icarus-redis"
+  spring.redis.port: "6379"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: translation-management-app
+data:
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  error-handling.rest.exception-management-app-url: "http://exception-management-app.azdemo-icarus-ms:8080/exception-management"
+  error-handling.rest.reference-data-app-url: "http://reference-data-app.azdemo-icarus-ms:8080/reference-data"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  error-handling.rest.ui-configuration-app-url: "http://ui-configuration-app.azdemo-icarus-ms:8080/ui-configuration"
+  logging.level.com.intrasoft.icarus.revenuemanagement.translationmanagement.TranslationManagementApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.datasource.password: "irm_translationmanagement_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_translationmanagement_db"
+  spring.datasource.username: "irm_translationmanagement_db"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+  spring.redis.host: "redis-master.azdemo-icarus-redis"
+  spring.redis.port: "6379"
+  translation-management.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  translation-management.auth.realm: "icarus-azdemo"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: translation-management-app-dbmig
+data:
+  LIQUIBASE_CHANGELOG_FILE: "migrations/translation-management/master.xml"
+  LIQUIBASE_COMMANDS: "update"
+  LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+  LIQUIBASE_DB_PASSWD: "irm_translationmanagement_db#$%1"
+  LIQUIBASE_DB_SCHEMA_NAME: "public"
+  LIQUIBASE_DB_URL: "jdbc:postgresql://10.241.69.4:5432/irm_translationmanagement_db"
+  LIQUIBASE_DB_USER: "irm_translationmanagement_db"
+  LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: entity-version-app
+data:
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  entity-version.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  entity-version.auth.realm: "icarus-azdemo"
+  error-handling.rest.reference-data-app-url: "http://reference-data-app.azdemo-icarus-ms:8080/reference-data"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  logging.level.com.intrasoft.icarus.revenuemanagement.entityversion.EntityVersionApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.datasource.password: "irm_entityversion_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_entityversion_db"
+  spring.datasource.username: "irm_entityversion_db"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+  spring.redis.host: "redis-master.azdemo-icarus-redis"
+  spring.redis.port: "6379"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: entity-version-app-dbmig
+data:
+  LIQUIBASE_CHANGELOG_FILE: "migrations/entity-version/master.xml"
+  LIQUIBASE_COMMANDS: "update"
+  LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+  LIQUIBASE_DB_PASSWD: "irm_entityversion_db#$%1"
+  LIQUIBASE_DB_SCHEMA_NAME: "public"
+  LIQUIBASE_DB_URL: "jdbc:postgresql://10.241.69.4:5432/irm_entityversion_db"
+  LIQUIBASE_DB_USER: "irm_entityversion_db"
+  LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authorization-management-app
+data:
+  authorization-management.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  authorization-management.auth.realm: "icarus-azdemo"
+  authorization-management.keycloak-client.client-secret: "01fee844-e0c4-4fe7-b9fb-cf1a4558af08"
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  error-handling.rest.reference-data-app-url: "http://reference-data-app.azdemo-icarus-ms:8080/reference-data"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  logging.level.com.intrasoft.icarus.revenuemanagement.authorizationmanagement.AuthorizationManagementApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.datasource.password: "irm_authorizationmanagement_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_authorizationmanagement_db"
+  spring.datasource.username: "irm_authorizationmanagement_db"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+  spring.redis.host: "redis-master.azdemo-icarus-redis"
+  spring.redis.port: "6379"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authorization-management-app-dbmig
+data:
+  LIQUIBASE_CHANGELOG_FILE: "migrations/authorization-management/master.xml"
+  LIQUIBASE_COMMANDS: "update"
+  LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+  LIQUIBASE_DB_PASSWD: "irm_authorizationmanagement_db#$%1"
+  LIQUIBASE_DB_SCHEMA_NAME: "public"
+  LIQUIBASE_DB_URL: "jdbc:postgresql://10.241.69.4:5432/irm_authorizationmanagement_db"
+  LIQUIBASE_DB_USER: "irm_authorizationmanagement_db"
+  LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notification-app
+data:
+  elastic.apm.configuration.environment: "azdemo"
+  elastic.apm.configuration.server_urls: "http://apm.swpd:30200"
+  elastic.apm.enabled: "false"
+  error-handling.rest.reference-data-app-url: "http://reference-data-app.azdemo-icarus-ms:8080/reference-data"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  logging.level.com.intrasoft.icarus.revenuemanagement.notification: "ERROR"
+  logging.level.com.intrasoft.icarus.revenuemanagement.notification.NotificationApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  notification.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  notification.auth.realm: "icarus-azdemo"
+  server.port: "8080"
+  spring.datasource.hikari.idle-timeout: "300000"
+  spring.datasource.hikari.max-lifetime: "600000"
+  spring.datasource.hikari.maximum-pool-size: "10"
+  spring.datasource.hikari.minimum-idle: "5"
+  spring.datasource.password: "irm_notificationmanagement_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_notificationmanagement_db"
+  spring.datasource.username: "irm_notificationmanagement_db"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+  spring.redis.host: "redis-master.azdemo-icarus-redis"
+  spring.redis.port: "6379"
+  spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+  spring.security.oauth2.client.registration.irm-be.client-secret: "01fee844-e0c4-4fe7-b9fb-cf1a4558af08"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notification-app-dbmig
+data:
+  LIQUIBASE_CHANGELOG_FILE: "migrations/notification-management/master-demo.xml"
+  LIQUIBASE_COMMANDS: "update"
+  LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+  LIQUIBASE_DB_PASSWD: "irm_notificationmanagement_db#$%1"
+  LIQUIBASE_DB_SCHEMA_NAME: "public"
+  LIQUIBASE_DB_URL: "jdbc:postgresql://10.241.69.4:5432/irm_notificationmanagement_db"
+  LIQUIBASE_DB_USER: "irm_notificationmanagement_db"
+  LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: exception-management-app
+data:
+  error-handling.rest.reference-data-app-url: "http://reference-data-app.azdemo-icarus-ms:8080/reference-data"
+  error-handling.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  exception-management.auth.auth-server-uri: "https://azdemo.icarus/auth/"
+  exception-management.auth.realm: "icarus-azdemo"
+  exception-management.rest.human-task-management-app-url: "http://human-task-management-custom-app.azdemo-icarus-ms:8080/human-task-management"
+  exception-management.rest.outbound.authorization-management: "http://authorization-management-app.azdemo-icarus-ms:8080"
+  exception-management.rest.outbound.authorization-management-app-url: "http://authorization-management-app.azdemo-icarus-ms:8080/authorization-management"
+  exception-management.rest.outbound.case-management: "http://case-management-custom-app.azdemo-icarus-ms:8080"
+  exception-management.rest.outbound.contact-management: "http://contact-management-custom-app.azdemo-icarus-ms:8080"
+  exception-management.rest.outbound.currency-exchange: "http://currency-exchange-app.azdemo-icarus-ms:8080"
+  exception-management.rest.outbound.entity-version-app-url: "http://entity-version-app.azdemo-icarus-ms:8080/entity-version"
+  exception-management.rest.outbound.human-task-management: "http://human-task-management-custom-app.azdemo-icarus-ms:8080"
+  exception-management.rest.outbound.process-management: "http://process-management-app.azdemo-icarus-ms:8080"
+  exception-management.rest.outbound.registration: "http://registration-custom-app.azdemo-icarus-ms:8080"
+  exception-management.rest.outbound.taxpayer-accounting: "http://taxpayer-accounting-custom-app.azdemo-icarus-ms:8080"
+  exception-management.rest.outbound.ui-configuration: "http://ui-configuration-app.azdemo-icarus-ms:8080"
+  exception-management.rest.translation-management-app-url: "http://translation-management-app.azdemo-icarus-ms:8080/translation-management"
+  exception-management.rest.ui-configuration-app-url: "http://ui-configuration-app.azdemo-icarus-ms:8080/ui-configuration"
+  logging.level.com.intrasoft.icarus.revenuemanagement.exceptionmanagement.ExceptionManagementApplication: "INFO"
+  logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: "ERROR"
+  logging.level.root: "ERROR"
+  server.port: "8080"
+  spring.datasource.password: "irm_exceptionmanagement_db#$%1"
+  spring.datasource.url: "jdbc:postgresql://10.241.69.4:5432/irm_exceptionmanagement_db"
+  spring.datasource.username: "irm_exceptionmanagement_db"
+  spring.jpa.show-sql: "false"
+  spring.kafka.bootstrap-servers: "kafka-headless.azdemo-icarus-kafka:9092"
+  spring.security.oauth2.client.registration.irm-be.client-id: "revenue-management-be-admin"
+  spring.security.oauth2.client.registration.irm-be.client-secret: "01fee844-e0c4-4fe7-b9fb-cf1a4558af08"
+---
+# Source: revenue-management-be/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: exception-management-app-dbmig
+data:
+  LIQUIBASE_CHANGELOG_FILE: "migrations/exception-management/master.xml"
+  LIQUIBASE_COMMANDS: "update"
+  LIQUIBASE_DB_DRIVER: "org.postgresql.Driver"
+  LIQUIBASE_DB_PASSWD: "irm_exceptionmanagement_db#$%1"
+  LIQUIBASE_DB_SCHEMA_NAME: "public"
+  LIQUIBASE_DB_URL: "jdbc:postgresql://10.241.69.4:5432/irm_exceptionmanagement_db"
+  LIQUIBASE_DB_USER: "irm_exceptionmanagement_db"
+  LIQUIBASE_LOG_LEVEL: "info"
+---
+# Source: revenue-management-be/templates/nodePort.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "api-gateway-app-nodeport"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: NodePort
+  selector:
+    app: "api-gateway-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30743
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "api-gateway-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "api-gateway-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "audit-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "audit-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "authorization-management-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "authorization-management-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "currency-exchange-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "currency-exchange-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "document-management-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "document-management-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "entity-version-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "entity-version-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "exception-management-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "exception-management-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "form-processing-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "form-processing-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "notification-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "notification-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "process-management-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "process-management-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "reference-data-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "reference-data-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "translation-management-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "translation-management-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "ui-configuration-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+spec:
+  type: ClusterIP
+  selector:
+    app: "ui-configuration-app"
+    tier: backend
+    environment: "default"
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "api-gateway-app"
+  labels:
+    app: "api-gateway-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "api-gateway-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "api-gateway-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      containers:
+      - name: "api-gateway-app"
+        image: "replace_with_dockerRegistry/api-gateway-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: api-gateway-app
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "audit-app"
+  labels:
+    app: "audit-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "audit-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "audit-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: audit-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: audit-app
+        - configMapRef:
+            name: audit-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "audit-app"
+        image: "replace_with_dockerRegistry/audit-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: audit-app
+        - configMapRef:
+            name: audit-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "authorization-management-app"
+  labels:
+    app: "authorization-management-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "authorization-management-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "authorization-management-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: authorization-management-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: authorization-management-app
+        - configMapRef:
+            name: authorization-management-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "authorization-management-app"
+        image: "replace_with_dockerRegistry/authorization-management-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: authorization-management-app
+        - configMapRef:
+            name: authorization-management-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "currency-exchange-app"
+  labels:
+    app: "currency-exchange-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "currency-exchange-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "currency-exchange-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: currency-exchange-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: currency-exchange-app
+        - configMapRef:
+            name: currency-exchange-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "currency-exchange-app"
+        image: "replace_with_dockerRegistry/currency-exchange-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: currency-exchange-app
+        - configMapRef:
+            name: currency-exchange-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "document-management-app"
+  labels:
+    app: "document-management-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "document-management-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "document-management-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: document-management-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: document-management-app
+        - configMapRef:
+            name: document-management-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "document-management-app"
+        image: "replace_with_dockerRegistry/document-management-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: document-management-app
+        - configMapRef:
+            name: document-management-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "entity-version-app"
+  labels:
+    app: "entity-version-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "entity-version-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "entity-version-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: entity-version-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: entity-version-app
+        - configMapRef:
+            name: entity-version-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "entity-version-app"
+        image: "replace_with_dockerRegistry/entity-version-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: entity-version-app
+        - configMapRef:
+            name: entity-version-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "exception-management-app"
+  labels:
+    app: "exception-management-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "exception-management-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "exception-management-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: exception-management-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: exception-management-app
+        - configMapRef:
+            name: exception-management-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "exception-management-app"
+        image: "replace_with_dockerRegistry/exception-management-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: exception-management-app
+        - configMapRef:
+            name: exception-management-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "form-processing-app"
+  labels:
+    app: "form-processing-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "form-processing-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "form-processing-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      containers:
+      - name: "form-processing-app"
+        image: "replace_with_dockerRegistry/form-processing-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: form-processing-app
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "notification-app"
+  labels:
+    app: "notification-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "notification-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "notification-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: notification-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: notification-app
+        - configMapRef:
+            name: notification-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "notification-app"
+        image: "replace_with_dockerRegistry/notification-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: notification-app
+        - configMapRef:
+            name: notification-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "process-management-app"
+  labels:
+    app: "process-management-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "process-management-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "process-management-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: process-management-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: process-management-app
+        - configMapRef:
+            name: process-management-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "process-management-app"
+        image: "replace_with_dockerRegistry/process-management-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: process-management-app
+        - configMapRef:
+            name: process-management-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "reference-data-app"
+  labels:
+    app: "reference-data-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "reference-data-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "reference-data-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      containers:
+      - name: "reference-data-app"
+        image: "replace_with_dockerRegistry/reference-data-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: reference-data-app
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "translation-management-app"
+  labels:
+    app: "translation-management-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "translation-management-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "translation-management-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: translation-management-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: translation-management-app
+        - configMapRef:
+            name: translation-management-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "translation-management-app"
+        image: "replace_with_dockerRegistry/translation-management-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: translation-management-app
+        - configMapRef:
+            name: translation-management-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ui-configuration-app"
+  labels:
+    app: "ui-configuration-app"
+    environment: "default"
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "ui-configuration-app"
+      tier: backend
+      environment: "default"
+  template:
+    metadata:
+      labels:
+        app: "ui-configuration-app"
+        tier: backend
+        environment: "default"
+    spec:
+      initContainers:
+      - name: truststore-init
+        image: adoptopenjdk/openjdk8-openj9:alpine-jre
+        command: ['/bin/sh','-c','cp /opt/java/openjdk/lib/security/cacerts /data/java-truststore/cacerts; keytool -import -noprompt -trustcacerts -alias rootCA -file "/tmp/rootCA.crt" -keystore "/data/java-truststore/cacerts" -storepass changeit']
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: java-truststore
+            mountPath: /data/java-truststore
+          - name: environment-ca-certificate
+            mountPath: /tmp/rootCA.crt
+            subPath: rootCA.crt
+      - name: ui-configuration-app-dbmig
+        image: replace_with_dockerRegistry/revenue-management-db-migration:latest-master
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 1000
+          runAsUser: 1000
+        envFrom:
+        - configMapRef:
+            name: ui-configuration-app
+        - configMapRef:
+            name: ui-configuration-app-dbmig
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+      containers:
+      - name: "ui-configuration-app"
+        image: "replace_with_dockerRegistry/ui-configuration-app:ReplaceWithTag"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JAVA_OPTS
+            value: null
+        envFrom:
+        - configMapRef:
+            name: ui-configuration-app
+        - configMapRef:
+            name: ui-configuration-app-dbmig
+        securityContext:
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        resources:
+          limits:
+            cpu: "0.5"
+            ephemeral-storage: 2Gi
+            memory: 1000Mi
+          requests:
+            cpu: "0.3"
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+        volumeMounts:
+        - name: java-truststore
+          mountPath: /opt/java/openjdk/lib/security/cacerts
+          subPath: cacerts
+        - name: java-truststore
+          mountPath: /etc/pki/java/
+      volumes:
+        - name: java-truststore
+          emptyDir: {}
+        - name: environment-ca-certificate
+          configMap:
+            name: rootca
+            items:
+              - key: rootCA.crt
+                path: rootCA.crt
+---
+# Source: revenue-management-be/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "api-gateway-app"
+  labels:
+    chart: "revenue-management-be"
+    environment: "default"
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "12m"
+    cert-manager.io/cluster-issuer: "ca-cl-issuer"
+spec:
+  ingressClassName: nginx-internal
+  tls:
+  - hosts:
+    - azdemo.icarus
+    secretName: default-tls
+  rules:
+  - host: azdemo.icarus
+    http:
+      paths:
+      - backend:
+          service:
+            name: "api-gateway-app"
+            port:
+              number: 8080
+        path: /api-gateway
+        pathType: ImplementationSpecific
+---
+# Source: revenue-management-be/templates/configmap.yaml
+# Temporary work around to only emit config map if the corresponding deployment is enabled
+# Eventually all these should fall under deployments struct
